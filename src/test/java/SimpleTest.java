@@ -1,8 +1,5 @@
-
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.testng.Assert;
+import google.HomePage;
+import google.SearchResultsPage;
 import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
@@ -10,26 +7,24 @@ import org.testng.annotations.Test;
 
 public class SimpleTest {
 
-    public WebDriver driver ;
+    final DriverWrapper driverWrapper = new DriverWrapper();
 
     @BeforeTest
     public void setUp() {
-        driver = new ChromeDriver();
+        driverWrapper.setUp();
     }
 
     @AfterTest
     public void tearDown() {
-        driver.close();
+        driverWrapper.tearDown();
     }
 
     @Test
-    public void simpleTest() {
-        driver.get("https://www.google.com.ua/");
-        driver.findElement(By.name("q")).sendKeys("java");
-        driver.findElement(By.name("q")).submit();
-        String title = driver.getTitle();
-        Assert.assertEquals(title,"java - Пошук Google");
-        System.out.println("test");
+    public void searchTest() {
+        HomePage homePage = new HomePage(driverWrapper.getDriver());
+        homePage.search("java");
+        SearchResultsPage searchResultsPage = new SearchResultsPage(driverWrapper.getDriver());
+        searchResultsPage.printTitle();
     }
 
 
