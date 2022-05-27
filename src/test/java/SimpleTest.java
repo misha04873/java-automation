@@ -29,6 +29,7 @@ public class SimpleTest {
         driver.findElement(By.name("q")).submit();
         String title = driver.getTitle();
         Assert.assertEquals(title,"java - Пошук Google");
+        System.out.println("test");
     }
 
 
